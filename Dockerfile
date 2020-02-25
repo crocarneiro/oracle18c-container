@@ -53,7 +53,8 @@ RUN cp -f /home/listener.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
 RUN cp -f /home/tnsnames.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
 
 # Create a startup script
-RUN echo $'./etc/init.d/oracle-xe-18c start || :\nlsnrctl start || :' >> /opt/startup.sh
+COPY "startup.sh" "/opt/startup.sh"
 RUN chmod +x /opt/startup.sh
 
 RUN rm oracle-database-xe-18c-1.0-1.x86_64.rpm
+ENTRYPOINT [ "/opt/startup.sh" ]
