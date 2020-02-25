@@ -48,9 +48,11 @@ RUN chmod 777 /opt/oracle/product/18c/dbhomeXE/network/log
 # Change TNS and listener configuration
 COPY "listener.ora" "/home/"
 COPY "tnsnames.ora" "/home/"
+COPY "sqlnet.ora" "/home/"
 
-RUN cp -f /home/listener.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
-RUN cp -f /home/tnsnames.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
+RUN yes | cp -f /home/listener.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
+RUN yes | cp -f /home/tnsnames.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
+RUN yes | cp -f /home/sqlnet.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
 
 # Create a startup script
 COPY "startup.sh" "/opt/startup.sh"
