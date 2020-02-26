@@ -43,7 +43,7 @@ ENV ADR_BASE_LISTENER=$ORACLE_HOME
 # Change some directories permissions
 RUN chmod 01777 /var/tmp/.oracle
 RUN chmod 6751 $ORACLE_HOME/bin/oracle
-RUN chmod 777 /opt/oracle/product/18c/dbhomeXE/network/log
+# RUN chmod 777 /opt/oracle/product/18c/dbhomeXE/network/log
 
 # Change TNS and listener configuration
 COPY "listener.ora" "/home/"
@@ -58,5 +58,10 @@ RUN yes | cp -f /home/sqlnet.ora /opt/oracle/product/18c/dbhomeXE/network/admin/
 COPY "startup.sh" "/opt/startup.sh"
 RUN chmod +x /opt/startup.sh
 
+# Set the startup script to start with the container
+
+ENTRYPOINT /opt/startup.sh
+
+# Delete some shits
+RUN yum clean all
 RUN rm oracle-database-xe-18c-1.0-1.x86_64.rpm
-ENTRYPOINT [ "/opt/startup.sh" ]
